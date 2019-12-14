@@ -12,9 +12,9 @@ It consists of
 
 # Features
 
-- Stream Deck plugin code written in C++
+- Stream Deck plugin written in C++
 - Lightroom plugin written in lua script
-- Windows only
+- Currently Windows only
 - Hardcoded TCP port in both plugins.
 
 # Architecture
@@ -36,6 +36,7 @@ The Lightroom plugin accepts the following zoom messages:
 * Zoom4:1
 * Zoom8:1
 * Zoom11:1
+
 ...and the following edit parameters:
 * Temperature
 * Tint
@@ -48,7 +49,9 @@ The Lightroom plugin accepts the following zoom messages:
 * Clarity
 * Vibrance
 * Saturation
+
 ...using the syntax `<parameter> = [+, -, float_value]`
+
 E.g.: 
 `Exposure = +`
 `Highlights = -0.5`
