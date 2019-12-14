@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\Common\main.cpp" />
+    <ClCompile Include="..\MyStreamDeckPlugin.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="..\Common\ESDConnectionManager.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\ESDLocalizer.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\ESDUtilitiesWindows.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\MyStreamDeckPlugin.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="..\Common\EPLJSONUtils.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\ESDBasePlugin.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="CpuUsageHelper.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\ESDConnectionManager.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\ESDLocalizer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\ESDSDKDefines.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\ESDUtilities.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\com.ebo.lr.sdPlugin\manifest.json" />
+    <None Include="..\com.ebo.lr.sdPlugin\props.html" />
+    <None Include="..\com.ebo.lr.sdPlugin\sdpi.css" />
+    <None Include="..\com.ebo.lr.sdPlugin\en.json" />
+    <None Include="..\Lightroom\streamdeck.lrplugin\Info.lua">
+      <Filter>streamdeck.lrplugin</Filter>
+    </None>
+    <None Include="..\Lightroom\streamdeck.lrplugin\start.lua">
+      <Filter>streamdeck.lrplugin</Filter>
+    </None>
+    <None Include="..\Lightroom\streamdeck.lrplugin\stop.lua">
+      <Filter>streamdeck.lrplugin</Filter>
+    </None>
+    <None Include="..\Lightroom\streamdeck.lrplugin\ZoomFill.lua">
+      <Filter>streamdeck.lrplugin</Filter>
+    </None>
+    <None Include="..\Lightroom\streamdeck.lrplugin\ZoomFit.lua">
+      <Filter>streamdeck.lrplugin</Filter>
+    </None>
+    <None Include="..\Lightroom\streamdeck.lrplugin\ZoomOne.lua">
+      <Filter>streamdeck.lrplugin</Filter>
+    </None>
+    <None Include="..\Lightroom\streamdeck.lrplugin\shutdown.lua">
+      <Filter>streamdeck.lrplugin</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>{8acc1b06-d009-4299-b268-b4c10d5b6a0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="streamdeck.lrplugin">
+      <UniqueIdentifier>{b3802203-d2ff-4396-8fc8-94aaa364bd5c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,38 @@
+{
+    "Actions": [
+        { 
+            "Icon": "icon",
+            "Name": "Command",
+            "States": [
+                {
+                    "Image": "defaultImage",
+                    "TitleAlignment": "middle",
+                    "FontSize": "17"
+                }
+            ],
+            "SupportedInMultiActions": false,
+            "Tooltip": "",
+            "UUID": "com.ebo.lr.cmd"
+        }
+    ],
+    "SDKVersion": 2,
+    "Author": "Erik Bongers",
+    "CodePathWin": "lr.exe",
+    "Description": "Commands for Adobe Lightroom CC Classic.",
+    "Name": "Lightroom",
+    "Icon": "pluginIcon",
+    "Category": "Lightroom",
+    "CategoryIcon": "pluginIcon",
+    "URL": "",
+    "Version": "1.0",
+    "OS": [
+        {
+            "Platform": "windows",
+            "MinimumVersion": "10"
+        }
+    ],
+    "Software": {
+        "MinimumVersion": "4.1"
+    },
+    "PropertyInspectorPath": "props.html"
+}

@@ -1,0 +1,8 @@
+{
+  "Description": "Lightroom CC Classic", 
+  "Name": "Lightroom", 
+  "com.ebo.lr.cmd": {
+    "Name": "Command", 
+    "Tooltip": ""
+  }
+}

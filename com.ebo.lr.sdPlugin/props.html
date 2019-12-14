@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>My Property Inspector</title>
+    <link rel="stylesheet" href="sdpi.css">
+</head>
+<body>
+    <div class="sdpi-wrapper">
+        <div class="sdpi-item">
+            <div class="sdpi-item-label">Command</div>
+            <input class="sdpi-item-value" id="ID_command" value="" onchange="sendValueToPlugin(event.target.value, 'ID_command')">
+        </div>
+    </div>
+    <script>
+
+        var websocket = null,
+            uuid = null,
+            actionInfo = {},
+            settings = null;
+
+        function connectElgatoStreamDeckSocket(inPort, inUUID, inRegisterEvent, inInfo, inActionInfo)
+        {
+            uuid = inUUID;
+            actionInfo = JSON.parse(inActionInfo);
+            settings = actionInfo.payload.settings;
+            //set the stored value(s) of the props panel
+            document.getElementById("ID_command").value = settings.ID_command;
+            websocket = new WebSocket('ws://localhost:' + inPort);
+
+            // if connection was established, the websocket sends an 'onopen' event, where we need to register our PI
+            websocket.onopen = function () {
+                var json = {
+                    event:  inRegisterEvent,
+                    uuid:   inUUID
+                };
+                // register property inspector to Stream Deck
+                websocket.send(JSON.stringify(json));
+            }
+        }
+
+        // our method to pass values to the plugin
+        function sendValueToPlugin(value, param) {
+            if (websocket) {
+                const json = {
+                        "action": actionInfo['action'],
+                        "event": "sendToPlugin",
+                        "context": uuid,
+                        "payload": {
+                            [param] : value
+                        }
+                };
+                //alert(JSON.stringify(json));
+                 websocket.send(JSON.stringify(json));
+            }
+        }
+    </script>
+</body>
+</html>

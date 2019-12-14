@@ -1,0 +1,10 @@
+D:/Documents/Programming/StreamDeck/Sources/Vendor/websocketpp/out/build/x64-Debug/CMakeFiles/install/local.dir
+D:/Documents/Programming/StreamDeck/Sources/Vendor/websocketpp/out/build/x64-Debug/CMakeFiles/install.dir
+D:/Documents/Programming/StreamDeck/Sources/Vendor/websocketpp/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+D:/Documents/Programming/StreamDeck/Sources/Vendor/websocketpp/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
+D:/Documents/Programming/StreamDeck/Sources/Vendor/websocketpp/out/build/x64-Debug/CMakeFiles/list_install_components.dir
+D:/Documents/Programming/StreamDeck/Sources/Vendor/websocketpp/out/build/x64-Debug/websocketpp/CMakeFiles/install/local.dir
+D:/Documents/Programming/StreamDeck/Sources/Vendor/websocketpp/out/build/x64-Debug/websocketpp/CMakeFiles/install.dir
+D:/Documents/Programming/StreamDeck/Sources/Vendor/websocketpp/out/build/x64-Debug/websocketpp/CMakeFiles/edit_cache.dir
+D:/Documents/Programming/StreamDeck/Sources/Vendor/websocketpp/out/build/x64-Debug/websocketpp/CMakeFiles/rebuild_cache.dir
+D:/Documents/Programming/StreamDeck/Sources/Vendor/websocketpp/out/build/x64-Debug/websocketpp/CMakeFiles/list_install_components.dir
