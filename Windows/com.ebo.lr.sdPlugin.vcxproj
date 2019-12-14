@@ -250,6 +250,7 @@ xcopy /Y "$(OutDir)..\..\..\com.ebo.lr.sdPlugin\*" "$(APPDATA)\Elgato\StreamDeck
     <None Include="..\Lightroom\streamdeck.lrplugin\ZoomFill.lua" />
     <None Include="..\Lightroom\streamdeck.lrplugin\ZoomFit.lua" />
     <None Include="..\Lightroom\streamdeck.lrplugin\ZoomOne.lua" />
+    <None Include="..\README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

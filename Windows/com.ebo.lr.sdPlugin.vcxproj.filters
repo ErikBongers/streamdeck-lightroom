@@ -65,6 +65,7 @@
     <None Include="..\Lightroom\streamdeck.lrplugin\shutdown.lua">
       <Filter>streamdeck.lrplugin</Filter>
     </None>
+    <None Include="..\README.md" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">
