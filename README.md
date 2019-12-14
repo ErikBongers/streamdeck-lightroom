@@ -60,8 +60,8 @@ E.g.:\
 
 # Installation
 
-In Lightroom, open the Plugin Manager and browse to the streamdeck.lrplugin folder to install.
-For Stream Deck copy the Sources/com.ebo.lr.sdPlugin folder to %APPDATA%\Elgato\StreamDeck\Plugins.
+In Lightroom, open the Plugin Manager and browse to the `streamdeck.lrplugin` folder to install.
+For Stream Deck, copy the `com.ebo.lr.sdPlugin` folder to `%APPDATA%\Elgato\StreamDeck\Plugins`.
 
 # Source code
 
