@@ -49,9 +49,10 @@ The Lightroom plugin accepts the following zoom messages:
 * Clarity
 * Vibrance
 * Saturation
-<br/>...using the syntax `<parameter> = [+, -, float_value]`<br/>
-E.g.: 
-`Exposure = +`
+
+...using the syntax `<parameter> = [+, -, float_value]`\
+E.g.:\
+`Exposure = +`\
 `Highlights = -0.5`
 
 # Installation
