@@ -194,7 +194,7 @@ xcopy /Y "$(OutDir)..\..\..\com.ebo.lr.sdPlugin\*" "$(APPDATA)\Elgato\StreamDeck
     <ClInclude Include="..\Common\ESDLocalizer.h" />
     <ClInclude Include="..\Common\ESDSDKDefines.h" />
     <ClInclude Include="..\Common\ESDUtilities.h" />
-    <ClInclude Include="..\MyStreamDeckPlugin.h" />
+    <ClInclude Include="..\LightroomStreamDeckPlugin.h" />
     <ClInclude Include="CpuUsageHelper.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
@@ -223,7 +223,7 @@ xcopy /Y "$(OutDir)..\..\..\com.ebo.lr.sdPlugin\*" "$(APPDATA)\Elgato\StreamDeck
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/FI"pch.h" %(AdditionalOptions)</AdditionalOptions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/FI"pch.h" %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
-    <ClCompile Include="..\MyStreamDeckPlugin.cpp">
+    <ClCompile Include="..\LightroomStreamDeckPlugin.cpp">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/FI"pch.h" %(AdditionalOptions)</AdditionalOptions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">/FI"pch.h" %(AdditionalOptions)</AdditionalOptions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/FI"pch.h" %(AdditionalOptions)</AdditionalOptions>

@@ -1,4 +1,4 @@
-#include "MyStreamDeckPlugin.h"
+#include "LightroomStreamDeckPlugin.h"
 #include <atomic>
 #include "Common/ESDConnectionManager.h"
 
@@ -52,7 +52,7 @@ private:
     std::thread _thd;
 };
 
-MyStreamDeckPlugin::MyStreamDeckPlugin()
+LightroomStreamDeckPlugin::LightroomStreamDeckPlugin()
 {
 	mTimer = new CallBackTimer();
 	mTimer->start(1000, [this]()
@@ -62,7 +62,7 @@ MyStreamDeckPlugin::MyStreamDeckPlugin()
 
 	}
 
-void MyStreamDeckPlugin::OpenPort()
+void LightroomStreamDeckPlugin::OpenPort()
 	{
 	int iResult;
 	WSADATA wsaData;
@@ -129,7 +129,7 @@ void MyStreamDeckPlugin::OpenPort()
 	openingPort = false;
 	}
 
-void MyStreamDeckPlugin::SendMsg(const char* message)
+void LightroomStreamDeckPlugin::SendMsg(const char* message)
 	{
 	if (ConnectSocket == INVALID_SOCKET)
 		return;
@@ -142,7 +142,7 @@ void MyStreamDeckPlugin::SendMsg(const char* message)
 		}
 	}
 
-MyStreamDeckPlugin::~MyStreamDeckPlugin()
+LightroomStreamDeckPlugin::~LightroomStreamDeckPlugin()
 	{
 	if(mTimer != nullptr)
 		{
@@ -156,13 +156,13 @@ MyStreamDeckPlugin::~MyStreamDeckPlugin()
 	WSACleanup();
 	}
 
-void MyStreamDeckPlugin::KeyDownForAction(const std::string& inAction, const std::string& inContext, const json &inPayload, const std::string& inDeviceID)
+void LightroomStreamDeckPlugin::KeyDownForAction(const std::string& inAction, const std::string& inContext, const json &inPayload, const std::string& inDeviceID)
 	{
 	SendMsg(inPayload["settings"]["ID_command"].get<std::string>().c_str());
 	SendMsg("\n");
 	}
 
-void MyStreamDeckPlugin::SendToPlugin(const std::string& inAction, const std::string& inContext, const json &inPayload, const std::string& inDeviceID)
+void LightroomStreamDeckPlugin::SendToPlugin(const std::string& inAction, const std::string& inContext, const json &inPayload, const std::string& inDeviceID)
 	{
  	mConnectionManager->SetSettings(inPayload, inContext);
 	}

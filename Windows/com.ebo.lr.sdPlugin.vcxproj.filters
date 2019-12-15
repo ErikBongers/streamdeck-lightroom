@@ -2,7 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="..\Common\main.cpp" />
-    <ClCompile Include="..\MyStreamDeckPlugin.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="..\Common\ESDConnectionManager.cpp">
       <Filter>Common</Filter>
@@ -13,9 +12,9 @@
     <ClCompile Include="..\Common\ESDUtilitiesWindows.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="..\LightroomStreamDeckPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\MyStreamDeckPlugin.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="..\Common\EPLJSONUtils.h">
       <Filter>Common</Filter>
@@ -38,6 +37,7 @@
     <ClInclude Include="..\Common\ESDUtilities.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="..\LightroomStreamDeckPlugin.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\com.ebo.lr.sdPlugin\manifest.json" />
