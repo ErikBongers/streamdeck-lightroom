@@ -73,5 +73,3 @@ The Sources folder contains the source code of the plugin.
  # TODO
  - [ ] Make macOS version
  - [ ] Add TCP port to user interface of both plugins or use broadcast (Lightroom is the server, Stream Deck the client)
- - [ ] Limit the constant attempts to open a connection. (Only when application is opened, when button pressed,...)
- - [ ] Add logging in Stream Deck plugin, when button fails. (possibly, reconnect socket)
