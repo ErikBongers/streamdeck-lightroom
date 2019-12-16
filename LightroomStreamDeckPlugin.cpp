@@ -127,6 +127,9 @@ void LightroomStreamDeckPlugin::OpenPort()
 		return;
 		}
 	openingPort = false;
+	std::string msg = "Connection with Lightroom established at port ";
+	msg += DEFAULT_PORT; //TDOO: are we sure this is the actual port number? Dynamic: https://stackoverflow.com/a/6660056/1311434
+	mConnectionManager->LogMessage(msg);
 	}
 
 void LightroomStreamDeckPlugin::SendMsg(const char* message)
@@ -136,7 +139,7 @@ void LightroomStreamDeckPlugin::SendMsg(const char* message)
 	int iResult = send(ConnectSocket, message, (int)strlen(message), 0);
 	if (iResult == SOCKET_ERROR) {
 		closesocket(ConnectSocket);
-		WSACleanup();
+		//WSACleanup(); this also kills the websocket connection!
 		ConnectSocket = INVALID_SOCKET;
 		return ;
 		}
@@ -158,8 +161,15 @@ LightroomStreamDeckPlugin::~LightroomStreamDeckPlugin()
 
 void LightroomStreamDeckPlugin::KeyDownForAction(const std::string& inAction, const std::string& inContext, const json &inPayload, const std::string& inDeviceID)
 	{
-	SendMsg(inPayload["settings"]["ID_command"].get<std::string>().c_str());
-	SendMsg("\n");
+	mConnectionManager->LogMessage("LightroomStreamDeckPlugin::KeyDownForAction()");
+	try {
+		SendMsg((inPayload["settings"]["ID_command"].get<std::string>()+"\n").c_str());
+		//SendMsg("\n");
+		}
+	catch (std::exception e)
+		{
+		mConnectionManager->LogMessage(e.what());
+		}
 	}
 
 void LightroomStreamDeckPlugin::SendToPlugin(const std::string& inAction, const std::string& inContext, const json &inPayload, const std::string& inDeviceID)
