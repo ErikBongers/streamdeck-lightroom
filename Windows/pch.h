@@ -58,5 +58,4 @@ using json = nlohmann::json;
 
 #define ASIO_STANDALONE
 
-
 #endif //PCH_H
