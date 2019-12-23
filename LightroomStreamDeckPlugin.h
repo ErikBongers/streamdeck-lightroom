@@ -1,3 +1,4 @@
+#include "Windows/pch.h"
 #include "Common/ESDBasePlugin.h"
 #include <mutex>
 #include <winsock2.h> 
