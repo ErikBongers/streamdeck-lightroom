@@ -1,5 +1,5 @@
 
-StreamDeck to Lightroom.
+StreamDeck to Lightroom connection.
 
 
 # Description
@@ -10,7 +10,7 @@ It consists of
   * a plugin for Stream Deck: com.ebo.lr.sdPlugin
 
 
-# Features
+# Features and limitations
 
 - Stream Deck plugin written in C++
 - Lightroom plugin written in lua script
@@ -20,7 +20,7 @@ It consists of
 # Architecture
 The Lightroom plugin opens a TCP server socket, bound to a hardcoded port.
 The Stream Deck plugin creates a client socket that constantly tries to connects to Lightroom.
-When connected, every button press sends the message value of the button to Lightroom.
+When connected, every button press sends the plain text message value of the button to Lightroom.
 
 # Usage
 The Lightroom plugin accepts the following zoom messages:
@@ -69,7 +69,7 @@ The Sources folder contains the source code of the plugin.
   * Common: some helpers created by Elgato
   * Vendor: some extra libraries
   * streamdeck.plugin: the Lightroom scripts
- 
+
  # TODO
  - [ ] Make macOS version
  - [ ] Add TCP port to user interface of both plugins or use broadcast (Lightroom is the server, Stream Deck the client)
