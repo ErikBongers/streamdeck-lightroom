@@ -14,8 +14,10 @@ It consists of
 
 - Stream Deck plugin written in C++
 - Lightroom plugin written in lua script
-- Currently Windows only
-- Hardcoded TCP port in both plugins.
+- TCP port changeable by user.
+- Currently Windows only.
+- Limited set of commands.
+
 
 # Architecture
 The Lightroom plugin opens a TCP server socket, bound to a hardcoded port.
