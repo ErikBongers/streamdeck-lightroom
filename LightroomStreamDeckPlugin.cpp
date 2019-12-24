@@ -3,7 +3,7 @@
 #include "Common/ESDConnectionManager.h"
 #include <stdlib.h>
 
-#define DEFAULT_PORT "49001"
+#define DEFAULT_PORT "49000"
 #define DEFAULT_BUFLEN 512
 
 class CallBackTimer
