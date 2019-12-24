@@ -7,9 +7,9 @@ return {
 	LrShutdownApp = "shutdown.lua", -- tells the main script to exit and waits for it to finish.
 	LrShutdownPlugin = "shutdown.lua",
 	LrDisablePlugin = "stop.lua", -- tells the main script to exit.
-	LrExportMenuItems = {
-		{ title = "Start", file = "start.lua" },
-		{ title = "Stop", file = "stop.lua" },
-	},
 	VERSION = { major=1, minor=1, revision=0, build="201912070000-a1b2c3d4", },
-}
+	LrExportMenuItems = {
+			{ title = "Start", file = "start.lua" }, -- at least one menu item needed to make "LrForceInitPlugin = true" work!
+			{ title = "Stop", file = "stop.lua" },
+		}
+	}

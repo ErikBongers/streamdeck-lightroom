@@ -59,15 +59,6 @@
     <None Include="..\Lightroom\streamdeck.lrplugin\stop.lua">
       <Filter>streamdeck.lrplugin</Filter>
     </None>
-    <None Include="..\Lightroom\streamdeck.lrplugin\ZoomFill.lua">
-      <Filter>streamdeck.lrplugin</Filter>
-    </None>
-    <None Include="..\Lightroom\streamdeck.lrplugin\ZoomFit.lua">
-      <Filter>streamdeck.lrplugin</Filter>
-    </None>
-    <None Include="..\Lightroom\streamdeck.lrplugin\ZoomOne.lua">
-      <Filter>streamdeck.lrplugin</Filter>
-    </None>
     <None Include="..\Lightroom\streamdeck.lrplugin\shutdown.lua">
       <Filter>streamdeck.lrplugin</Filter>
     </None>

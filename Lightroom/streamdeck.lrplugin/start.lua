@@ -13,8 +13,6 @@ local LrFileUtils = import "LrFileUtils"
 -- Port numbers
 -- port zero indicates that we want the OS to auto-assign the port
 local AUTO_PORT = 0
--- port number used to send change notifications
-local sendPort = 49001
 -- port number used to receive commands
 local defaultReceivePort = 49000
 --==============================================================================
@@ -56,43 +54,6 @@ for _, key in ipairs( develop_params ) do
 	develop_param_set[ key ] = true
 end
 
---------------------------------------------------------------------------------
--- Checks to see if observer[ key ] is equal to the given value. If the value has
--- changed, reports the change to the given sender.
--- Used to notify external processes when settings change in Lr.
-local function updateValue( observer, sender, key, value )
-	if observer[ key ] ~= value then
-		-- for table types, check if any values have changed
-		if type( value ) == "table" and type( observer[ key ] ) == "table" then
-			local different = false
-			for k, v in pairs( value ) do
-				if observer[ key ][ k ] ~= v then
-					different = true
-					break
-				end
-			end
-			for k, v in pairs( observer[ key ] ) do
-				if value[ k ] ~= v then
-					different = true
-					break
-				end
-			end
-			if not different then
-				return
-			end
-		end
-		observer[ key ] = value
-		local data = LrTableUtils.tableToString {
-			key = key,
-			value = value,
-			}
-		if WIN_ENV then
-			data = string.gsub( data, "\n", "\r\n" )
-		end
-		sender:send( data )
-	end
-end
-
 local function zoomIn(times)
 	for i=1,times do
 		LrApplicationView.zoomInSome()
@@ -104,7 +65,6 @@ local function zoomOut(times)
 		LrApplicationView.zoomOut()
 	end
 end
-
 
 local function setZoom(cmd)
 	zoomLvl = zoomCommands[cmd] 
