@@ -74,5 +74,5 @@ The Sources folder contains the source code of the plugin.
 
  # TODO
  - [ ] Make macOS version
- - [ ] Add TCP port to user interface of both plugins or use broadcast (Lightroom is the server, Stream Deck the client)
+ - [x] Add TCP port to user interface of both plugins or use broadcast (Lightroom is the server, Stream Deck the client)
 

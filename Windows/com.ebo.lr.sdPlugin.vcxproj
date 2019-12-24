@@ -236,7 +236,9 @@ xcopy /Y "$(OutDir)..\..\..\com.ebo.lr.sdPlugin\*" "$(APPDATA)\Elgato\StreamDeck
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\com.ebo.lr.sdPlugin\en.json" />
+    <None Include="..\com.ebo.lr.sdPlugin\en.json">
+      <DeploymentContent>false</DeploymentContent>
+    </None>
     <None Include="..\com.ebo.lr.sdPlugin\manifest.json" />
     <None Include="..\com.ebo.lr.sdPlugin\props.html">
       <DeploymentContent>false</DeploymentContent>

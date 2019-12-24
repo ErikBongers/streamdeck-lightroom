@@ -7,6 +7,8 @@ local LrSelection = import "LrSelection"
 local LrDevelopController = import "LrDevelopController"
 local LrSocket = import "LrSocket"
 local LrTableUtils = import "LrTableUtils"
+local LrPathUtils = import "LrPathUtils"
+local LrFileUtils = import "LrFileUtils"
 --==============================================================================
 -- Port numbers
 -- port zero indicates that we want the OS to auto-assign the port
@@ -14,7 +16,7 @@ local AUTO_PORT = 0
 -- port number used to send change notifications
 local sendPort = 49001
 -- port number used to receive commands
-local receivePort = 49000
+local defaultReceivePort = 49000
 --==============================================================================
 
 local zoomCommands = {}
@@ -105,8 +107,6 @@ end
 
 
 local function setZoom(cmd)
-	LrDialogs.showBezel(cmd, 1 )
-
 	zoomLvl = zoomCommands[cmd] 
 	if zoomLvl == nil then
 		return false
@@ -228,7 +228,6 @@ local function maybeStartService()
 						msg = string.format( "%s\nSender = %d", msg, senderPort )
 					end
 					msg = string.format("%s\n%d", msg, countDown )
-					LrDialogs.showBezel( msg, 1 )
 					LrTasks.sleep( 1 )
 				end
 			end )
@@ -275,15 +274,27 @@ local function makeSenderSocket( context )
 	return sender
 end
 
+local function getPortFromFile()
+	local thePort = defaultReceivePort
+	local path  = LrPathUtils.getStandardFilePath( "appData" )
+	path = path.."\\..\\..\\Ebo\\StreamDeckLightroom"
+	path = LrPathUtils.standardizePath( path )
+	LrFileUtils.createAllDirectories( path )
+	path = path.."\\port.config"
+	if LrFileUtils.exists( path ) then
+		thePort = LrFileUtils.readFile( path )
+	end
+	return thePort
+end
+
 --------------------------------------------------------------------------------
 local function makeReceiverSocket( context )
-	-- A socket connection that receives messages from the external process and executes
-	-- commands in Lightroom.
+	local thePort = getPortFromFile()
 	makingReceiver = true
-	LrDialogs.showBezel("Making receiver...")
+	LrDialogs.showBezel("Opening receiver at "..thePort, 1)
 	local receiver = LrSocket.bind {
 	functionContext = context,
-	port = receivePort,
+	port = thePort,
 	mode = "receive",
 	plugin = _PLUGIN,
 	onConnecting = function( socket, port )
@@ -308,8 +319,7 @@ local function makeReceiverSocket( context )
 						local key, value = parseMessage( message )
 						if key and value then
 							if setValue( key, value ) then
-								-- For the purpose of this demo, also show a bezel.
-								LrDialogs.showBezel( string.format( "%s %s!!!", tostring( key ), tostring( value ) ), 4 )
+								-- LrDialogs.showBezel( string.format( "%s %s!!!", tostring( key ), tostring( value ) ), 4 )
 							else
 								LrDialogs.showBezel("Unknown command: \""..message.."\"", 1 )
 							end
@@ -338,8 +348,6 @@ LrTasks.startAsyncTask( function()
 	-- loop until told to exit.
 	LrFunctionContext.callWithContext( 'socket_remote', function( context )
 		local sender = makeSenderSocket( context )
-		--local receiver = makeReceiverSocket( context )
-		LrDialogs.showBezel( "Controller Demo Running" )
 		-- Loop until this plug-in global is set to false, which happens when the external process
 		-- closes the socket connection(s), or if the user selects the menu command "File >
 		-- Plug-in Extras > Stop" , or when Lightroom is shutting down.

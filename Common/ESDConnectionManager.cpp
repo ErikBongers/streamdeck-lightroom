@@ -233,17 +233,40 @@ void ESDConnectionManager::ShowOKForContext(const std::string& inContext)
 	mWebsocket.send(mConnectionHandle, jsonObject.dump(), websocketpp::frame::opcode::text, ec);
 }
 
-void ESDConnectionManager::SetSettings(const json &inSettings, const std::string& inContext)
-{
+void ESDConnectionManager::SetGlobalSettings(const json& inSettings, const std::string& inContext)
+	{
+	json jsonObject;
+
+	jsonObject[kESDSDKCommonEvent] = kESDSDKEventSetGlobalSettings;
+	jsonObject[kESDSDKCommonContext] = inContext;
+	jsonObject[kESDSDKCommonPayload] = inSettings;
+
+	websocketpp::lib::error_code ec;
+	mWebsocket.send(mConnectionHandle, jsonObject.dump(), websocketpp::frame::opcode::text, ec);
+	}
+
+void ESDConnectionManager::GetGlobalSettings(const std::string& inContext)
+	{
+	json jsonObject;
+
+	jsonObject[kESDSDKCommonEvent] = kESDSDKEventGetGlobalSettings;
+	jsonObject[kESDSDKCommonContext] = inContext;
+
+	websocketpp::lib::error_code ec;
+	mWebsocket.send(mConnectionHandle, jsonObject.dump(), websocketpp::frame::opcode::text, ec);
+	}
+
+void ESDConnectionManager::SetSettings(const json& inSettings, const std::string& inContext)
+	{
 	json jsonObject;
 
 	jsonObject[kESDSDKCommonEvent] = kESDSDKEventSetSettings;
 	jsonObject[kESDSDKCommonContext] = inContext;
 	jsonObject[kESDSDKCommonPayload] = inSettings;
-	
+
 	websocketpp::lib::error_code ec;
 	mWebsocket.send(mConnectionHandle, jsonObject.dump(), websocketpp::frame::opcode::text, ec);
-}
+	}
 
 void ESDConnectionManager::SetState(int inState, const std::string& inContext)
 {
