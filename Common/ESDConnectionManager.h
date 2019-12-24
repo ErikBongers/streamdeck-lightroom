@@ -42,7 +42,9 @@ public:
 	void SetImage(const std::string &inBase64ImageString, const std::string& inContext, ESDSDKTarget inTarget);
 	void ShowAlertForContext(const std::string& inContext);
 	void ShowOKForContext(const std::string& inContext);
-	void SetSettings(const json &inSettings, const std::string& inContext);
+	void SetSettings(const json& inSettings, const std::string& inContext);
+	void SetGlobalSettings(const json& inSettings, const std::string& inContext);
+	void GetGlobalSettings(const std::string& inContext);
 	void SetState(int inState, const std::string& inContext);
 	void SendToPropertyInspector(const std::string& inAction, const std::string& inContext, const json &inPayload);
 	void SwitchToProfile(const std::string& inDeviceID, const std::string& inProfileName);

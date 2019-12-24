@@ -11,6 +11,13 @@
             <div class="sdpi-item-label">Command</div>
             <input class="sdpi-item-value" id="ID_command" value="" onchange="sendValueToPlugin(event.target.value, 'ID_command')">
         </div>
+        <details>
+            <summary>Setup</summary>
+            <div class="sdpi-item">
+                <div class="sdpi-item-label">Port</div>
+                <input class="sdpi-item-value" id="ID_port" value="" onchange="sendValueToPlugin(event.target.value, 'ID_port', true)">
+            </div>
+        </details>    
     </div>
     <script>
 
@@ -31,29 +38,62 @@
             // if connection was established, the websocket sends an 'onopen' event, where we need to register our PI
             websocket.onopen = function () {
                 var json = {
-                    event:  inRegisterEvent,
-                    uuid:   inUUID
+                    event: inRegisterEvent,
+                    uuid: inUUID
                 };
                 // register property inspector to Stream Deck
                 websocket.send(JSON.stringify(json));
-            }
+                var json = {
+                    "event": "getGlobalSettings",
+                    "context": uuid
+                };
+                websocket.send(JSON.stringify(json));
+            };
+
+            websocket.onmessage = function(event) {
+                var data = JSON.parse(event.data);
+                var eventID = data.event;
+                var payload = data.payload;
+                if (eventID == "didReceiveGlobalSettings")
+                {
+                    didReceiveGlobalSettings(payload.settings);
+                }
+            };
         }
 
-        // our method to pass values to the plugin
-        function sendValueToPlugin(value, param) {
-            if (websocket) {
-                const json = {
-                        "action": actionInfo['action'],
-                        "event": "sendToPlugin",
-                        "context": uuid,
-                        "payload": {
-                            [param] : value
-                        }
-                };
-                //alert(JSON.stringify(json));
-                 websocket.send(JSON.stringify(json));
+        function didReceiveGlobalSettings(settings) 
+            {
+            document.getElementById("ID_port").value = settings.ID_port;
             }
-        }
+
+        function sendValueToPlugin(value, param, global = false) 
+            {
+            if (!websocket)
+                return;
+
+            var json = {
+                "action": actionInfo['action'],
+                "event": "sendToPlugin",
+                "context": uuid,
+                "payload": {
+                    [param]: value,
+                    "global": global
+                    }
+                };
+            websocket.send(JSON.stringify(json));
+            //if "global" value, send twice: first to plugin (which will also save it to a file for Lightroom to read), and secondly as a global setting so that other actions can show the same value.
+            if (global) 
+                {
+                json = {
+                    "event": "setGlobalSettings",
+                    "context": uuid,
+                    "payload": {
+                        [param]: value
+                        }
+                    };
+                }
+            websocket.send(JSON.stringify(json));
+            }
     </script>
 </body>
 </html>

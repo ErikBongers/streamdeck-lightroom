@@ -1,6 +1,7 @@
 #include "LightroomStreamDeckPlugin.h"
 #include <atomic>
 #include "Common/ESDConnectionManager.h"
+#include <stdlib.h>
 
 #define DEFAULT_PORT "49000"
 #define DEFAULT_BUFLEN 512
@@ -52,15 +53,48 @@ private:
     std::thread _thd;
 };
 
-LightroomStreamDeckPlugin::LightroomStreamDeckPlugin()
-{
+LightroomStreamDeckPlugin::LightroomStreamDeckPlugin(const Params& params) : params(params)
+	{
+	PWSTR pValue = 0;
+	std::wstring configDir = L"";
+	SHGetKnownFolderPath(FOLDERID_RoamingAppData, 0, 0, &pValue);
+	configDir = pValue;
+	CoTaskMemFree(pValue);
+	configDir += L"\\Ebo\\StreamDeckLightroom";
+	SHCreateDirectoryExW(0, configDir.c_str(), 0);
+	configFile = configDir + L"\\port.config";
+
+	std::ifstream myfile;
+	std::stringstream sstr; 
+	myfile.open(configFile);
+	if (!myfile.fail())
+		{
+		sstr << myfile.rdbuf();
+		myfile.close();
+		port = sstr.str();
+		}
+	else
+		{
+		port = DEFAULT_PORT;
+		savePortToFile(port);
+		}
+
 	mTimer = new CallBackTimer();
 	mTimer->start(1000, [this]()
 	{
-		OpenPort();
+		OpenPort();  
 	});
 
 	}
+
+void LightroomStreamDeckPlugin::WillAppearForAction(const std::string& inAction, const std::string& inContext, const json& inPayload, const std::string& inDeviceID)
+	{
+	json payload;
+
+	payload["ID_port"] = port;
+	mConnectionManager->SetGlobalSettings(payload, params.pluginUUID);
+	};
+
 
 void LightroomStreamDeckPlugin::OpenPort()
 	{
@@ -89,7 +123,7 @@ void LightroomStreamDeckPlugin::OpenPort()
 
 
 	// Resolve the server address and port
-	iResult = getaddrinfo("localhost", DEFAULT_PORT, &hints, &result);
+	iResult = getaddrinfo("localhost", port.c_str(), &hints, &result);
 	if (iResult != 0) {
 		WSACleanup();
 		openingPort = false;
@@ -128,7 +162,7 @@ void LightroomStreamDeckPlugin::OpenPort()
 		}
 	openingPort = false;
 	std::string msg = "Connection with Lightroom established at port ";
-	msg += DEFAULT_PORT; //TDOO: are we sure this is the actual port number? Dynamic: https://stackoverflow.com/a/6660056/1311434
+	msg += port; //TDOO: are we sure this is the actual port number? Dynamic: https://stackoverflow.com/a/6660056/1311434
 	mConnectionManager->LogMessage(msg);
 	}
 
@@ -172,7 +206,33 @@ void LightroomStreamDeckPlugin::KeyDownForAction(const std::string& inAction, co
 		}
 	}
 
+void LightroomStreamDeckPlugin::savePortToFile(std::string port)
+	{
+	std::ofstream myfile;
+	myfile.open(configFile);
+	myfile << port;
+	myfile.close();
+	}
+
+void LightroomStreamDeckPlugin::ClosePort()
+	{
+	if (ConnectSocket != INVALID_SOCKET)
+		closesocket(ConnectSocket); 
+	ConnectSocket = INVALID_SOCKET;
+	openingPort = false;
+	}
+
 void LightroomStreamDeckPlugin::SendToPlugin(const std::string& inAction, const std::string& inContext, const json &inPayload, const std::string& inDeviceID)
 	{
- 	mConnectionManager->SetSettings(inPayload, inContext);
+	if (inPayload["global"].get<bool>())
+		{
+		mConnectionManager->SetGlobalSettings(inPayload, inContext);
+		port = inPayload["ID_port"].get<std::string>(); //TODO: assuming if(global) then must be "ID_port". In future allow config file to contain multiple params (in json format?)
+		savePortToFile(port);
+		ClosePort(); //force re-opening on new port.
+		}
+	else
+		{
+		mConnectionManager->SetSettings(inPayload, inContext);
+		}
 	}
