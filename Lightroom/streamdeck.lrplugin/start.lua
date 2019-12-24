@@ -189,90 +189,10 @@ local function parseMessage( data )
 end
 
 --------------------------------------------------------------------------------
--- checks all Develop parameters for any changes that happened in Lr, reporting
--- them to the sender socket.
-local function updateDevelopParameters( observer )
-	local sender = observer._sender
-	for _, param in ipairs( develop_params ) do
-		updateValue( observer, sender, param, LrDevelopController.getValue( param ) )
-	end
-end
-
---------------------------------------------------------------------------------
-local senderPort, senderConnected, senderObserver
 local receiverPort
 local receiverConnected = false
 local makingReceiver = false
 --------------------------------------------------------------------------------
--- Called by both the send socket and the receive socket when they begin their
--- attempt to establish a connection to a port number.
-local function maybeStartService()
-	-- For the purpose of this demo, we are letting the OS select port numbers.
-	-- So we will use a bezel message to tell the user what thse ports are so they
-	-- can connect to them via Telnet (or similar) to send and receive messages.
-	if senderPort and receiverPort then
-		LrTasks.startAsyncTask( function()
-				-- Give them 10 seconds to connect.
-				for countDown = 10, 1, -1 do
-					if not _G.running then
-						break
-					end
-					if senderConnected and receiverConnected then
-						break
-					end
-					local msg = "Connect to port:"
-					if not receiverConnected then
-						msg = string.format( "%s\nReceiver = %d", msg, receiverPort )
-					end
-					if not senderConnected then
-						msg = string.format( "%s\nSender = %d", msg, senderPort )
-					end
-					msg = string.format("%s\n%d", msg, countDown )
-					LrTasks.sleep( 1 )
-				end
-			end )
-	end
-end
-
---------------------------------------------------------------------------------
-local function makeSenderSocket( context )
-	-- A socket connection that sends messages from the plugin to the external process.
-	local sender = LrSocket.bind {
-		functionContext = context,
-		address = "localhost",
-		port = sendPort,
-		mode = "send",
-		plugin = _PLUGIN,
-		onConnecting = function( socket, port )
-							senderPort = port
-						end,
-		onConnected = function( socket, port )
-							senderConnected = true
-						end,
-		onMessage = function( socket, message )
-							-- Nothing, we don't expect to get any messages back.
-						end,
-		onClosed = function( socket )
-							-- If the other side of this socket is closed,
-							-- tell the run loop below that it should exit.
-							_G.running = false
-						end,
-		onError = function( socket, err )
-							if err == "timeout" then
-								socket:reconnect()
-							end
-						end,
-	}
-	-- This object is used to observe Develop parameter changes and
-	-- report them all to the sender socket.
-	senderObserver = {
-		_sender = sender,
-		}
-	LrDevelopController.addAdjustmentChangeObserver( context, senderObserver, updateDevelopParameters )
-	-- do initial update
-	updateDevelopParameters( senderObserver )
-	return sender
-end
 
 local function getPortFromFile()
 	local thePort = defaultReceivePort
@@ -347,7 +267,6 @@ LrTasks.startAsyncTask( function()
 	-- closed. We stay inside this context indefinitiely by spinning in a sleep
 	-- loop until told to exit.
 	LrFunctionContext.callWithContext( 'socket_remote', function( context )
-		local sender = makeSenderSocket( context )
 		-- Loop until this plug-in global is set to false, which happens when the external process
 		-- closes the socket connection(s), or if the user selects the menu command "File >
 		-- Plug-in Extras > Stop" , or when Lightroom is shutting down.
@@ -359,13 +278,9 @@ LrTasks.startAsyncTask( function()
 			LrTasks.sleep( 1/2 ) -- seconds
 		end
 		_G.shutdown = true
-		if senderConnected then
-			sender:close()
-		end
-		senderObserver = nil
 		if receiverConnected then
 			receiver:close()
 		end
-		LrDialogs.showBezel( "Remote Connections Closed", 4 )
+		LrDialogs.showBezel( "Remote connection closed", 4 )
 		end )
 end )
