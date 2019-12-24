@@ -4,5 +4,5 @@
 
 ESDBasePlugin* pluginMain(const Params& params)
     {
-    return new LightroomStreamDeckPlugin();
+    return new LightroomStreamDeckPlugin(params);
     }

@@ -7,6 +7,8 @@ local LrSelection = import "LrSelection"
 local LrDevelopController = import "LrDevelopController"
 local LrSocket = import "LrSocket"
 local LrTableUtils = import "LrTableUtils"
+local LrPathUtils = import "LrPathUtils"
+local LrFileUtils = import "LrFileUtils"
 --==============================================================================
 -- Port numbers
 -- port zero indicates that we want the OS to auto-assign the port
@@ -14,7 +16,7 @@ local AUTO_PORT = 0
 -- port number used to send change notifications
 local sendPort = 49001
 -- port number used to receive commands
-local receivePort = 49000
+local defaultReceivePort = 49000
 --==============================================================================
 
 local zoomCommands = {}
@@ -275,15 +277,27 @@ local function makeSenderSocket( context )
 	return sender
 end
 
+local function getPortFromFile()
+	local thePort = defaultReceivePort
+	local path  = LrPathUtils.getStandardFilePath( "appData" )
+	path = path.."\\..\\..\\Ebo\\StreamDeckLightroom"
+	path = LrPathUtils.standardizePath( path )
+	LrFileUtils.createAllDirectories( path )
+	path = path.."\\port.config"
+	if LrFileUtils.exists( path ) then
+		thePort = LrFileUtils.readFile( path )
+	end
+	return thePort
+end
+
 --------------------------------------------------------------------------------
 local function makeReceiverSocket( context )
-	-- A socket connection that receives messages from the external process and executes
-	-- commands in Lightroom.
+	local thePort = getPortFromFile()
 	makingReceiver = true
-	LrDialogs.showBezel("Making receiver...")
+	LrDialogs.showBezel("Opening receiver at "..thePort)
 	local receiver = LrSocket.bind {
 	functionContext = context,
-	port = receivePort,
+	port = thePort,
 	mode = "receive",
 	plugin = _PLUGIN,
 	onConnecting = function( socket, port )

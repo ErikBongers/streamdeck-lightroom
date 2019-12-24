@@ -19,10 +19,13 @@
 
 #include <winsock2.h>
 #include <Windows.h>
+#include <shlobj_core.h>
 #include <string>
 #include <set>
 #include <thread>
 #include <strsafe.h>
+#include <iostream>
+#include <fstream>
 
 
 //-------------------------------------------------------------------
