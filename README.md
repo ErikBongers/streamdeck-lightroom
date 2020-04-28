@@ -67,7 +67,6 @@ For Stream Deck, copy the `com.ebo.lr.sdPlugin` folder to `%APPDATA%\Elgato\Stre
 
 # Source code
 
-The Sources folder contains the source code of the plugin.
   * Common: some helpers created by Elgato
   * Vendor: some extra libraries
   * streamdeck.plugin: the Lightroom scripts
@@ -76,3 +75,12 @@ The Sources folder contains the source code of the plugin.
  - [ ] Make macOS version
  - [x] Add TCP port to user interface of both plugins or use broadcast (Lightroom is the server, Stream Deck the client)
 
+# Disclaimer
+
+This is a personal project and the features are limited to what I need. I offer no support, but other contributors are welcome and you may copy/clone this project for your own needs and adjustments.
+
+##For non-programmers:
+
+The Stream Deck plugin is compiled (lr.exe) and thus both plugins can be used as is.
+If the lr.exe complains about a missing MSVC____D.dll (and others), it means I accidently uploaded the debug version of lr.exe.
+Just submit an issue in github and I'll replace it.
