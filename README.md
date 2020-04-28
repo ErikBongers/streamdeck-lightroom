@@ -20,7 +20,7 @@ It consists of
 
 
 # Architecture
-The Lightroom plugin opens a TCP server socket, bound to a hardcoded port.
+The Lightroom plugin opens a TCP server socket, bound to a user defined port.
 The Stream Deck plugin creates a client socket that constantly tries to connects to Lightroom.
 When connected, every button press sends the plain text message value of the button to Lightroom.
 
