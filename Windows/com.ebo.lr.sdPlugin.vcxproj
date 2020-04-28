@@ -85,12 +85,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>cpu</TargetName>
+    <TargetName>lr</TargetName>
     <IncludePath>../Vendor/asio/include;../Vendor/websocketpp;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>cpu</TargetName>
+    <TargetName>lr</TargetName>
     <IncludePath>../Vendor/asio/include;../Vendor/websocketpp;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -111,8 +111,11 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(OutDir)$(TargetName)$(TargetExt)" "$(OutDir)..\..\com.ebo.lr.sdPlugin\$(TargetName)$(TargetExt)"
-xcopy /Y $(OutDir)..\..\com.ebo.lr.sdPlugin\* $(APPDATA)\Elgato\StreamDeck\Plugins\com.ebo.lr.sdPlugin</Command>
+      <Command>copy "$(OutDir)$(TargetName)$(TargetExt)" "$(OutDir)..\..\com.ebo.lr.sdPlugin\$(TargetName)_$(Configuration)$(TargetExt)"
+xcopy /Y $(OutDir)..\..\com.ebo.lr.sdPlugin\* $(APPDATA)\Elgato\StreamDeck\Plugins\com.ebo.lr.sdPlugin
+del "$(APPDATA)\Elgato\StreamDeck\Plugins\com.ebo.lr.sdPlugin\$(TargetName)$(TargetExt)"
+rename "$(APPDATA)\Elgato\StreamDeck\Plugins\com.ebo.lr.sdPlugin\$(TargetName)_$(Configuration)$(TargetExt)" "$(TargetName)$(TargetExt)"
+del "$(OutDir)..\..\com.ebo.lr.sdPlugin\$(TargetName)_$(Configuration)$(TargetExt)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -164,6 +167,9 @@ xcopy /Y "$(OutDir)..\..\..\com.ebo.lr.sdPlugin\*" "$(APPDATA)\Elgato\StreamDeck
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(OutDir)$(TargetName)$(TargetExt)" "$(OutDir)..\..\com.ebo.lr.sdPlugin\$(TargetName)$(TargetExt)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -220,6 +226,7 @@ xcopy /Y "$(OutDir)..\..\..\com.ebo.lr.sdPlugin\*" "$(APPDATA)\Elgato\StreamDeck
     </ClCompile>
     <ClCompile Include="..\Common\Startup.cpp">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/FI"pch.h" %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">/FI"pch.h" %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <ClCompile Include="..\LightroomStreamDeckPlugin.cpp">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/FI"pch.h" %(AdditionalOptions)</AdditionalOptions>
