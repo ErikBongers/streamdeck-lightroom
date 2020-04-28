@@ -67,7 +67,6 @@ For Stream Deck, copy the `com.ebo.lr.sdPlugin` folder to `%APPDATA%\Elgato\Stre
 
 # Source code
 
-The Sources folder contains the source code of the plugin.
   * Common: some helpers created by Elgato
   * Vendor: some extra libraries
   * streamdeck.plugin: the Lightroom scripts
