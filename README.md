@@ -42,7 +42,7 @@ The Lightroom plugin accepts the following zoom messages:
 * Zoom8:1
 * Zoom11:1
 
-...and the following edit parameters:
+...the following edit parameters:
 * Temperature
 * Tint
 * Exposure
@@ -54,11 +54,21 @@ The Lightroom plugin accepts the following zoom messages:
 * Clarity
 * Vibrance
 * Saturation
+* keyword
+* label
+
+
 
 ...using the syntax `<parameter> = [ + | - | float_value ]`\
 E.g.:\
 `Exposure = +`\
 `Highlights = -0.5`
+
+...and the following library parameters:
+* `keyword = <keyword>`
+* `select = [ next | previous ]`
+* `rating = [ 1 to 5 ]`
+* `flag = [ 1 | 0 | -1 ]`
 
 # Installation
 

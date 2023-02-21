@@ -67,7 +67,7 @@ local function zoomOut(times)
 end
 
 local function setZoom(cmd)
-	zoomLvl = zoomCommands[cmd] 
+	zoomLvl = zoomCommands[cmd]
 	if zoomLvl == nil then
 		return false
 	end
@@ -78,14 +78,34 @@ local function setZoom(cmd)
 		zoomIn(zoomLvl.dev)
 	else -- assuming library view
 		zoomIn(zoomLvl.lib)
-	end		
+	end
 	return true
 end
+
+
+local function setKeyword( value )
+	LrTasks.startAsyncTask(function()
+
+		local catalog = LrApplication.activeCatalog()
+		local photos = catalog:getTargetPhotos()
+		catalog:withWriteAccessDo("Set Keyword", function(context)
+			local kw = catalog:createKeyword(value, {}, true, nil, true)
+			for i, photo in ipairs(photos) do
+				photo:addKeyword(kw, photo)
+			end
+		end)
+	end )
+end
+
 
 --------------------------------------------------------------------------------
 -- Given a key/value pair that has been parsed from a receiver port message, calls
 -- the appropriate API to adjust a setting in Lr.
 local function setValue( key, value )
+	if key == "keyword" then
+        setKeyword( value )
+		return true
+	end
 	if value == "+" then -- ex: "Exposure = +"
 		LrDevelopController.increment( key )
 		return true
