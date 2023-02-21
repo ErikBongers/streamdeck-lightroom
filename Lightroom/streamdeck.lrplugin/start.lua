@@ -219,7 +219,7 @@ local function makeReceiverSocket( context )
 						local key, value = parseMessage( message )
 						if key and value then
 							if setValue( key, value ) then
-								L:trace( string.format( "%s %s!!!", tostring( key ), tostring( value ) ), 4 )
+								-- LrDialogs.showBezel( string.format( "%s %s!!!", tostring( key ), tostring( value ) ), 4 )
 							else
 								LrDialogs.showBezel("Unknown command: \""..message.."\"", 1 )
 							end
