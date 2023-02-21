@@ -58,6 +58,7 @@ The Lightroom plugin accepts the following zoom messages:
 * label
 
 
+
 ...using the syntax `<parameter> = [ + | - | float_value ]`\
 E.g.:\
 `Exposure = +`\
