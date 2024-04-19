@@ -47,7 +47,7 @@ The Lightroom plugin accepts the following zoom messages:
 * Vibrance
 * Saturation
 
-...using the syntax:
+...using the syntax:\
 `<parameter> = +` to increment the parameter a bit.\
 `<parameter> = -` to decrement the parameter a bit.\
 `<parameter> = reset` to reset the parameter to the default (middle) value.\
