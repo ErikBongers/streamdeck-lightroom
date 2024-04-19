@@ -1,5 +1,5 @@
 return {
-	LrSdkVersion = 6.0,
+	LrSdkVersion = 10.0,
 	LrPluginName = "Stream Deck",
 	LrToolkitIdentifier = 'com.ebo.streamdeck',
 	LrInitPlugin = "start.lua", -- runs when plug-in initializes (this is the main script)

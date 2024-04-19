@@ -1,4 +1,6 @@
 ﻿/Windows/Debug
 /Windows/Release
 /Windows/.vs
+/Windows/*/Debug/
+/Windows/*/Release/
 /.vs

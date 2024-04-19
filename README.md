@@ -26,21 +26,13 @@ When connected, every button press sends the plain text message value of the but
 
 # Usage
 The Lightroom plugin accepts the following zoom messages:
-* ZoomGrid
-* ZoomFit
-* ZoomFill
-* Zoom1:16
-* Zoom1:8
-* Zoom1:4
-* Zoom1:3
-* Zoom1:2
-* ZoomOne
-* Zoom1:1
-* Zoom2:1
-* Zoom3:1
-* Zoom4:1
-* Zoom8:1
-* Zoom11:1
+* ZoomToggle
+* ZoomOut
+* ZoomIn
+* ZoomOutSome
+* ZoomInSome
+* Zoom50% or Zoom1:2
+* ZoomOne or Zoom1:1
 
 ...and the following edit parameters:
 * Temperature
@@ -55,14 +47,20 @@ The Lightroom plugin accepts the following zoom messages:
 * Vibrance
 * Saturation
 
-...using the syntax `<parameter> = [ + | - | float_value ]`\
+...using the syntax:
+`<parameter> = +` to increment the parameter a bit.
+`<parameter> = -` to decrement the parameter a bit.
+`<parameter> = reset` to reset the parameter to the default (middle) value.
+`<parameter> = decimal_number` to set the parameter to an exact value.
+ ```
 E.g.:\
 `Exposure = +`\
-`Highlights = -0.5`
+`Highlights = -0.5`\
+`Temperature = reset`
 
 # Installation
 
-In Lightroom, open the Plugin Manager and browse to the `streamdeck.lrplugin` folder to install.
+In Lightroom, open the Plugin Manager and browse to the `project_folder\Lightroom\streamdeck.lrplugin` folder to install.
 For Stream Deck, copy the `com.ebo.lr.sdPlugin` folder to `%APPDATA%\Elgato\StreamDeck\Plugins`.
 
 # Source code
@@ -71,8 +69,14 @@ For Stream Deck, copy the `com.ebo.lr.sdPlugin` folder to `%APPDATA%\Elgato\Stre
   * Vendor: some extra libraries
   * streamdeck.plugin: the Lightroom scripts
 
+# Build
+  In the windows folder is a Visual Studio solution file (.sln).
+  In any case, include these folders in the include-path:
+    * ../Vendor/asio/include
+    * ../Vendor/websocketpp
+
  # TODO
- - [ ] Make macOS version
+ - [ ] Make macOS version (or OS-agnostic NodeJS version)
  - [x] Add TCP port to user interface of both plugins or use broadcast (Lightroom is the server, Stream Deck the client)
 
 # Disclaimer

@@ -1,6 +1,6 @@
 {
     "Actions": [
-        { 
+        {
             "Icon": "icon",
             "Name": "Command",
             "States": [
@@ -32,7 +32,7 @@
         }
     ],
     "Software": {
-        "MinimumVersion": "4.1"
+        "MinimumVersion": "6.1"
     },
     "PropertyInspectorPath": "props.html"
 }

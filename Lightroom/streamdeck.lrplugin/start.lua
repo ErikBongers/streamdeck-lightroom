@@ -18,21 +18,27 @@ local defaultReceivePort = 49000
 --==============================================================================
 
 local zoomCommands = {}
-zoomCommands["ZoomGrid"] = { lib = 0, dev = 0 }
-zoomCommands["ZoomFit"] = { lib = 1, dev = 0 }
-zoomCommands["ZoomFill"] = { lib = 2, dev = 1 }
+zoomCommands["ZoomGrid"] = { lib = -7, dev = -7 }
 zoomCommands["Zoom1:16"] = { lib = 3, dev = 2 }
 zoomCommands["Zoom1:8"] = { lib = 4, dev = 3 }
 zoomCommands["Zoom1:4"] = { lib = 5, dev = 4 }
 zoomCommands["Zoom1:3"] = { lib = 6, dev = 5 }
 zoomCommands["Zoom1:2"] = { lib = 7, dev = 6 }
-zoomCommands["ZoomOne"] = { lib = 8, dev = 7 }
-zoomCommands["Zoom1:1"] = { lib = 8, dev = 7 }
+zoomCommands["Zoom50%"] = { lib = -2, dev = -2 }
 zoomCommands["Zoom2:1"] = { lib = 9, dev = 8 }
 zoomCommands["Zoom3:1"] = { lib = 10, dev = 9 }
 zoomCommands["Zoom4:1"] = { lib = 11, dev = 10 }
 zoomCommands["Zoom8:1"] = { lib = 12, dev = 11 }
 zoomCommands["Zoom11:1"] = { lib = 13, dev = 12 }
+
+local zoomFunctions = {}
+zoomFunctions["ZoomIn"] = LrApplicationView.zoomIn
+zoomFunctions["ZoomOut"] = LrApplicationView.zoomOut
+zoomFunctions["ZoomInSome"] = LrApplicationView.zoomInSome
+zoomFunctions["ZoomOutSome"] = LrApplicationView.zoomOutSome
+zoomFunctions["ZoomOne"] = LrApplicationView.zoomToOneToOne
+zoomFunctions["Zoom1:1"] = LrApplicationView.zoomToOneToOne
+zoomFunctions["ZoomToggle"] = LrApplicationView.toggleZoom
 
 -- All of the Develop parameters that we will monitor for changes. For a complete
 -- listing of all parameter names, see the API documentation for LrDevelopController.
@@ -66,18 +72,33 @@ local function zoomOut(times)
 	end
 end
 
+local function zoomToLevel(level)
+	LrApplicationView.zoomToOneToOne()
+	if level > 0 then
+		zoomIn(level)
+	else
+		zoomOut(-level)
+	end
+end
+
 local function setZoom(cmd)
+	func = zoomFunctions[cmd]
+
+	if (func) then
+		func()
+		return true
+	end
+
 	zoomLvl = zoomCommands[cmd] 
 	if zoomLvl == nil then
 		return false
 	end
-	zoomOut(7) -- full zoomOut
 
 	modName = LrApplicationView.getCurrentModuleName()
 	if( modName == "develop") then
-		zoomIn(zoomLvl.dev)
+		zoomToLevel(zoomLvl.dev)
 	else -- assuming library view
-		zoomIn(zoomLvl.lib)
+		zoomToLevel(zoomLvl.lib)
 	end		
 	return true
 end
@@ -171,7 +192,7 @@ end
 local function makeReceiverSocket( context )
 	local thePort = getPortFromFile()
 	makingReceiver = true
-	LrDialogs.showBezel("Opening receiver at "..thePort, 1)
+	LrDialogs.showBezel("Opening streamdeck at port "..thePort, 1)
 	local receiver = LrSocket.bind {
 	functionContext = context,
 	port = thePort,
