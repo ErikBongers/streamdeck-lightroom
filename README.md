@@ -48,11 +48,11 @@ The Lightroom plugin accepts the following zoom messages:
 * Saturation
 
 ...using the syntax:
-`<parameter> = +` to increment the parameter a bit.
-`<parameter> = -` to decrement the parameter a bit.
-`<parameter> = reset` to reset the parameter to the default (middle) value.
+`<parameter> = +` to increment the parameter a bit.\
+`<parameter> = -` to decrement the parameter a bit.\
+`<parameter> = reset` to reset the parameter to the default (middle) value.\
 `<parameter> = decimal_number` to set the parameter to an exact value.
- ```
+
 E.g.:\
 `Exposure = +`\
 `Highlights = -0.5`\
